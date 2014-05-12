@@ -114,7 +114,8 @@ App.ArtistController = Ember.ObjectController.extend({
 App.WORKS = [
   {
     workId: '1',
-    title: 'Fabienne Verdier',
+    artist: 'Fabienne Verdier',
+    title: 'Fabienne Verdier', //incandescence
     price: 200000,
     type: 'Painting',
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean sed massa pellentesque ante tempus feugiat vel vel metus. Cras mi velit, interdum eu viverra cursus, molestie et elit. Pellentesque nec pellentesque turpis. Pellentesque vel nibh tempus, volutpat nisi ac, dictum tellus. Praesent tincidunt purus nec tellus varius, sit amet fermentum nisi sollicitudin. Proin rhoncus pretium nibh, fermentum ultrices augue rhoncus in. Donec id velit ac libero semper tincidunt. Maecenas placerat eget orci at dictum. Mauris in rhoncus mauris, auctor auctor purus. Nunc vitae tincidunt odio, dignissim consectetur nibh. Suspendisse sollicitudin luctus dui in lacinia. Pellentesque mattis arcu mauris, vitae eleifend turpis varius ut. Sed eget augue odio. Donec ac tortor eget nulla rutrum ullamcorper. Curabitur vestibulum tortor elit, vitae pretium eros mollis sed.',
@@ -123,6 +124,7 @@ App.WORKS = [
   },
   {
     workId: '2',
+    artist: 'Banksy',
     title: 'Banksy',
     price: 300000,
     type: 'Wall painting',
@@ -132,6 +134,7 @@ App.WORKS = [
   },
   {
     workId: '3',
+    artist: 'Yue Minjun',
     title: 'Yue Minjun',
     price: 1000000,
     type: 'Painting',
@@ -141,6 +144,7 @@ App.WORKS = [
   },
   {
     workId: '4',
+    artist: 'Nathan Sawaya',
     title: 'Nathan Sawaya',
     price: 20000,
     type: 'Sculpture',

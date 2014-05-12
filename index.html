@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="utf-8">
     <title>Ember.js App</title>
     <script src="/js/libs/jquery-1.10.2.js"></script>
     <script src="/js/libs/handlebars-1.1.2.js"></script>
@@ -77,12 +78,11 @@
     </script>
 
     <script type="text/x-handlebars" data-template-name="work">
-      <h1>Artwork Description</h1>
+      <h2>{{title}}</h2>
       <ul class="list-unstyled col-md-8">
           <li class="row">
             <img {{bind-attr src="image" alt="title"}} class="img-thumbnail col-md-5" />
             <div class="col-md-7">
-              <h2>{{title}}</h2>
               <p class='product-description'><strong>Type: </strong>{{type}}</p>
               <p class='product-description'><strong>Description: </strong>{{description}}</p>
               <p>
@@ -98,7 +98,7 @@
 
     <script type="text/x-handlebars" data-template-name="artists">
       <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-2">
           <div class="list-group">
             <ul class="nav navbar-nav">
               {{#each}}
@@ -111,18 +111,22 @@
             </ul>
           </div>
         </div>
-        <div class="col-sm-9">
+        <div class="col-sm-10">
           {{outlet}}
         </div>
       </div>
     </script>
 
+    <script type="text/x-handlebars" data-template-name="artists/index">
+      <p class="text-muted">Click on an artist to get more details</p>
+    </script>
+
     <script type="text/x-handlebars" data-template-name="artist">
-      <ul class="list-unstyled col-md-8">
+      <h2>{{name}}</h2>
+      <ul class="list-unstyled col-md-10">
           <li class="row">
             <img {{bind-attr src="image" alt="name"}} class="img-thumbnail col-md-5" />
             <div class="col-md-7">
-              <h2>{{name}}</h2>
               <p class='product-description'><strong>Nationality: </strong>{{nationality}}</p>
               <p class='product-description'><strong>Born on: </strong>{{bornOn}}</p>
               <p class='product-description'><strong>Died on: </strong>{{diedOn}}</p>
