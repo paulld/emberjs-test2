@@ -31,6 +31,7 @@
             <ul class="nav navbar-nav">
               <li>{{#link-to 'index'}}Home{{/link-to}}</li>
               <li>{{#link-to 'works'}}Artworks{{/link-to}}</li>
+              <li>{{#link-to 'artists'}}Artists{{/link-to}}</li>
               <li>{{#link-to 'about'}}About Us{{/link-to}}</li>
               <li>{{#link-to 'credits'}}Credits{{/link-to}}</li>
             </ul>
@@ -90,6 +91,42 @@
                   Back to list of Artworks
                 {{/link-to}}
               </p>
+            </div>
+          </li>
+      </ul>     
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="artists">
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="list-group">
+            <ul class="nav navbar-nav">
+              {{#each}}
+                <li>
+                  {{#link-to 'artist' this className="list-group-item"}}
+                    {{name}}
+                  {{/link-to}}
+                </li>
+              {{/each}}
+            </ul>
+          </div>
+        </div>
+        <div class="col-sm-9">
+          {{outlet}}
+        </div>
+      </div>
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="artist">
+      <ul class="list-unstyled col-md-8">
+          <li class="row">
+            <img {{bind-attr src="image" alt="name"}} class="img-thumbnail col-md-5" />
+            <div class="col-md-7">
+              <h2>{{name}}</h2>
+              <p class='product-description'><strong>Nationality: </strong>{{nationality}}</p>
+              <p class='product-description'><strong>Born on: </strong>{{bornOn}}</p>
+              <p class='product-description'><strong>Died on: </strong>{{diedOn}}</p>
+              <p class='product-description'><strong>Description: </strong>{{description}}</p>
             </div>
           </li>
       </ul>     
