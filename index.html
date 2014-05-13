@@ -44,7 +44,14 @@
 
       <div id="footer">
         <div class="container">
-          <p class="text-muted">Ember.js App by PLD</p>
+          <div class="row">
+            <div class="col-md-7">
+              <p class="text-muted">Ember.js App by PLD</p>
+            </div>
+            <div class="col-md-5">
+              <p class="text-muted">Today is {{time}}</p>
+            </div>
+          </div>
         </div>
       </div>
     </script>
@@ -52,9 +59,44 @@
 
     <script type="text/x-handlebars" data-template-name="index">
       <h1>Welcome to our Website!</h1>
-      <p>There are {{productsCount}} products.</p>
-      <img {{bind-attr src='logo' alt='logo'}} />
-      <p>Today is {{time}}</p>
+      <div class="row">
+        <div class="col-md-5">
+          <h2>{{#link-to 'works'}}Artworks{{/link-to}}</h2>
+          <p>
+            There are <strong>{{worksCount}} artworks</strong> currently listed in our database.
+          </p>
+          <p>
+            {{#link-to 'works' tagName="button" classNames="btn btn-primary"}}
+              See the {{worksCount}} Artworks 
+            {{/link-to}}
+          </p>
+          <p>&nbsp;</p>
+          <h4>Most viewed Artworks:</h4>
+          <ul>
+            {{#each workViewsCount}}
+              <li>{{#link-to 'work' this}}{{title}}{{/link-to}} ({{workViewsCount}})</li>
+            {{/each}}
+          </ul>
+        </div>
+        <div class="col-md-5">
+          <h2>{{#link-to 'artists'}}Artists{{/link-to}}</h2>
+          <p>
+            There are <strong>{{artistsCount}} artists</strong> currently listedin our database.
+          </p>
+          <p>
+            {{#link-to 'artists' tagName="button" classNames="btn btn-primary"}}
+              See the {{artistsCount}} Artists
+            {{/link-to}}
+          </p>
+          <p>&nbsp;</p>
+          <h4>Most viewed Artists:</h4>
+          <ul>
+            {{#each artistViews}}
+              <li>{{name}}</li>
+            {{/each}}
+          </ul>
+        </div>
+      </div>
     </script>
 
     <script type="text/x-handlebars" data-template-name="works">
@@ -65,7 +107,7 @@
             <img {{bind-attr src="image" alt ="title"}} class="img-thumbnail col-md-5" />
             <div class="col-md-7">
               <h2>{{title}}</h2>
-              <p>Artist: {{drawer.name}}</p>
+              <p>Artist: {{drawer.firstName}} {{drawer.lastName}}</p>
               <p class='product-description'>{{type}}</p>
               <p>
                 {{#link-to 'work' this tagName="button" classNames="btn btn-success"}}
@@ -86,7 +128,7 @@
             <div class="col-md-7">
               <h4>Artist: 
                 {{#link-to 'artist' drawer}}
-                  {{drawer.name}}
+                  {{drawer.firstName}} {{drawer.lastName}}
                 {{/link-to}}
               </h4>
               <p class='product-description'><strong>Type: </strong>{{type}}</p>
@@ -110,7 +152,7 @@
               {{#each}}
                 <li>
                   {{#link-to 'artist' this className="list-group-item"}}
-                    {{name}}
+                    {{firstName}} {{lastName}}
                   {{/link-to}}
                 </li>
               {{/each}}
@@ -128,7 +170,7 @@
     </script>
 
     <script type="text/x-handlebars" data-template-name="artist">
-      <h2>{{name}}</h2>
+      <h2>{{firstName}} {{lastName}}</h2>
       <ul class="list-unstyled col-md-10">
           <li class="row">
             <img {{bind-attr src="image" alt="name"}} class="img-thumbnail col-md-5" />
