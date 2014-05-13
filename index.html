@@ -65,6 +65,7 @@
             <img {{bind-attr src="image" alt ="title"}} class="img-thumbnail col-md-5" />
             <div class="col-md-7">
               <h2>{{title}}</h2>
+              <p>Artist: {{drawer.name}}</p>
               <p class='product-description'>{{type}}</p>
               <p>
                 {{#link-to 'work' this tagName="button" classNames="btn btn-success"}}
@@ -83,6 +84,11 @@
           <li class="row">
             <img {{bind-attr src="image" alt="title"}} class="img-thumbnail col-md-5" />
             <div class="col-md-7">
+              <h4>Artist: 
+                {{#link-to 'artist' drawer}}
+                  {{drawer.name}}
+                {{/link-to}}
+              </h4>
               <p class='product-description'><strong>Type: </strong>{{type}}</p>
               <p class='product-description'><strong>Description: </strong>{{description}}</p>
               <p>
@@ -132,6 +138,34 @@
               <p class='product-description'><strong>Died on: </strong>{{diedOn}}</p>
               <p class='product-description'><strong>Description: </strong>{{description}}</p>
             </div>
+          </li>
+          <li class="row">
+            <h2>Main Artworks</h2>
+            <ul>
+              {{#each works}}
+                <li>
+                  {{#link-to 'work' this}}
+                    {{title}}
+                  {{/link-to}}
+                </li>
+              {{else}}
+                <li><p class="text-muted">
+                  <em>No artworks added yet. Be the first to add one for this artist!</em>
+                  </p></li>
+              {{/each}}
+            </ul>
+          </li>
+          <li class="row">
+            <h3>Comments</h3>
+            <ul>
+              {{#each comments}}
+                <li>{{text}}</li>
+              {{else}}
+                <li><p class="text-muted">
+                  <em>No comments yet. Be the first to comment on this artist!</em>
+                  </p></li>
+              {{/each}}
+            </ul>
           </li>
       </ul>     
     </script>
