@@ -63,35 +63,35 @@
         <div class="col-md-5">
           <h2>{{#link-to 'works'}}Artworks{{/link-to}}</h2>
           <p>
-            There are <strong>{{worksCount}} artworks</strong> currently listed in our database.
+            There are <strong>{{totalWorks}} artworks</strong> currently listed in our database.
           </p>
           <p>
             {{#link-to 'works' tagName="button" classNames="btn btn-primary"}}
-              See the {{worksCount}} Artworks 
+              See the {{totalWorks}} Artworks 
             {{/link-to}}
           </p>
           <p>&nbsp;</p>
           <h4>Most viewed Artworks:</h4>
           <ul>
-            {{#each workViewsCount}}
-              <li>{{#link-to 'work' this}}{{title}}{{/link-to}} ({{workViewsCount}})</li>
+            {{#each workViewCount}}
+              <li>{{#link-to 'work' this}}{{title}}{{/link-to}} ({{workViewCount}})</li>
             {{/each}}
           </ul>
         </div>
         <div class="col-md-5">
           <h2>{{#link-to 'artists'}}Artists{{/link-to}}</h2>
           <p>
-            There are <strong>{{artistsCount}} artists</strong> currently listedin our database.
+            There are <strong>{{totalArtists}} artists</strong> currently listedin our database.
           </p>
           <p>
             {{#link-to 'artists' tagName="button" classNames="btn btn-primary"}}
-              See the {{artistsCount}} Artists
+              See the {{totalArtists}} Artists
             {{/link-to}}
           </p>
           <p>&nbsp;</p>
           <h4>Most viewed Artists:</h4>
           <ul>
-            {{#each artistViews}}
+            {{#each artistViewCount}}
               <li>{{name}}</li>
             {{/each}}
           </ul>
@@ -104,7 +104,32 @@
       <ul class="list-unstyled col-md-8">
         {{#each}}
           <li class="row">
-            <img {{bind-attr src="image" alt ="title"}} class="img-thumbnail col-md-5" />
+            {{#link-to 'work' this}}
+              <img {{bind-attr src="image" alt ="title"}} class="img-thumbnail col-md-5" />
+            {{/link-to}}
+            <div class="col-md-7">
+              <h2>{{title}}</h2>
+              <p>Artist: {{drawer.firstName}} {{drawer.lastName}}</p>
+              <p class='product-description'>{{type}}</p>
+              <p>
+                {{#link-to 'work' this tagName="button" classNames="btn btn-success"}}
+                  Buy for {{price}} 
+                {{/link-to}}
+              </p>
+            </div>
+          </li>
+        {{/each}}
+      </ul>
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="works/onsale">
+      <h1>List of all On Sale Artworks</h1>
+      <ul class="list-unstyled col-md-8">
+        {{#each}}
+          <li class="row">
+            {{#link-to 'work' this}}
+              <img {{bind-attr src="image" alt ="title"}} class="img-thumbnail col-md-5" />
+            {{/link-to}}
             <div class="col-md-7">
               <h2>{{title}}</h2>
               <p>Artist: {{drawer.firstName}} {{drawer.lastName}}</p>
