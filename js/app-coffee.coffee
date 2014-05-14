@@ -55,7 +55,12 @@ App.WorksRoute = Ember.Route.extend(
 
 App.WorksOnsaleRoute = Ember.Route.extend(
   model: ->
-    @modelFor('works').filterBy('isOnSale')
+    @store.filter('work', { 'isOnSale': true })
+    # console.log @modelFor('works')
+    # @modelFor('works').filterBy('isOnSale')
+    # @store.filter('work', { isOnSale: true }, (work) ->
+      # work.get('isOnSale')
+    # )
     # @store.findAll('work').filterBy('isOnSale')
 )
 
@@ -163,11 +168,43 @@ App.ArtistsController = Ember.ArrayController.extend(
   sortProperties: ['lastName']
 )
 
-App.ArtistController = Ember.ObjectController.extend()
+App.ArtistController = Ember.ObjectController.extend(
+  text: ''
+  actions: {
+    createComment: ->
+      # console.log 'createComment called'
+      comment = @store.createRecord('comment',
+        text: @get('text')
+        artist: @get('model')
+        commentedAt: new Date()
+      )
+      controller = @
+      comment.save().then( (comment) ->
+        controller.set('text', '')
+        controller.get('model.comments').addObject(comment)
+      )
+  }
+)
+
+App.ArtistCommentsController = Ember.ArrayController.extend(
+  sortProperties: ['commentedAt']
+  sortAscending: false
+)
+App.ArtistWorksController = Ember.ArrayController.extend(
+  sortProperties: ['title']
+  sortAscending: true
+)
+
+# //////////////////////////////////////////////////////
+# COMPONENTS
+# //////////////////////////////////////////////////////
+
+
+
 
 
 # //////////////////////////////////////////////////////
-# MODELS
+# DATA MODELS
 # //////////////////////////////////////////////////////
 
 App.Work = DS.Model.extend(
@@ -301,6 +338,54 @@ App.Work.FIXTURES = [    #SPECIFIC TO FIXTURES
     image: 'images/dali-profile-of-time.jpg'
     drawer: 101
   }
+  {
+    id: 6
+    title: 'La Persistence de la Mémoire'
+    price: 45000000
+    type: 'Painting'
+    description: 'Proin in consequat sem. Nulla vitae quam et leo volutpat
+    commodo. Maecenas vel nisi purus. Nunc laoreet dolor nec eros imperdiet
+    eleifend. Aliquam sollicitudin nec mauris non tristique. Sed et hendrerit
+    dui. Cras non condimentum purus. Nam volutpat venenatis tortor. Donec a
+    sapien non lectus sagittis iaculis. Morbi ut elit scelerisque, lacinia urna
+    quis, pulvinar libero.'
+    isOnSale: true
+    workViewCount: 108
+    image: 'images/dali-persistance-memoire.jpg'
+    drawer: 101
+  }
+  {
+    id: 7
+    title: 'The Treachery of Images'
+    price: 55000000
+    type: 'Painting'
+    description: 'Proin in consequat sem. Nulla vitae quam et leo volutpat
+    commodo. Maecenas vel nisi purus. Nunc laoreet dolor nec eros imperdiet
+    eleifend. Aliquam sollicitudin nec mauris non tristique. Sed et hendrerit
+    dui. Cras non condimentum purus. Nam volutpat venenatis tortor. Donec a
+    sapien non lectus sagittis iaculis. Morbi ut elit scelerisque, lacinia urna
+    quis, pulvinar libero.'
+    isOnSale: true
+    workViewCount: 95
+    image: 'images/magritte-trahison-images.jpg'
+    drawer: 102
+  }
+  {
+    id: 8
+    title: 'Le Fils de l\'Homme'
+    price: 65000000
+    type: 'Painting'
+    description: 'Proin in consequat sem. Nulla vitae quam et leo volutpat
+    commodo. Maecenas vel nisi purus. Nunc laoreet dolor nec eros imperdiet
+    eleifend. Aliquam sollicitudin nec mauris non tristique. Sed et hendrerit
+    dui. Cras non condimentum purus. Nam volutpat venenatis tortor. Donec a
+    sapien non lectus sagittis iaculis. Morbi ut elit scelerisque, lacinia urna
+    quis, pulvinar libero.'
+    isOnSale: true
+    workViewCount: 118
+    image: 'images/magritte-fils-homme.jpg'
+    drawer: 102
+  }
 ]
 
 App.Artist.FIXTURES = [    #SPECIFIC TO FIXTURES
@@ -353,7 +438,7 @@ App.Artist.FIXTURES = [    #SPECIFIC TO FIXTURES
     image: 'images/artist2.png'
     artistViewCount: false
     comments: [202]    #SPECIFIC TO FIXTURES
-    works: [4,5]
+    works: [4,5,6]
   }
   {
     id: 102
@@ -369,6 +454,7 @@ App.Artist.FIXTURES = [    #SPECIFIC TO FIXTURES
     challenging observers\' preconditioned perceptions of reality.'
     image: 'images/artist3.png'
     artistViewCount: true
+    works: [7,8]
   }
   {
     id: 103

@@ -38,7 +38,9 @@
 
   App.WorksOnsaleRoute = Ember.Route.extend({
     model: function() {
-      return this.modelFor('works').filterBy('isOnSale');
+      return this.store.filter('work', {
+        'isOnSale': true
+      });
     }
   });
 
@@ -89,7 +91,34 @@
     sortProperties: ['lastName']
   });
 
-  App.ArtistController = Ember.ObjectController.extend();
+  App.ArtistController = Ember.ObjectController.extend({
+    text: '',
+    actions: {
+      createComment: function() {
+        var comment, controller;
+        comment = this.store.createRecord('comment', {
+          text: this.get('text'),
+          artist: this.get('model'),
+          commentedAt: new Date()
+        });
+        controller = this;
+        return comment.save().then(function(comment) {
+          controller.set('text', '');
+          return controller.get('model.comments').addObject(comment);
+        });
+      }
+    }
+  });
+
+  App.ArtistCommentsController = Ember.ArrayController.extend({
+    sortProperties: ['commentedAt'],
+    sortAscending: false
+  });
+
+  App.ArtistWorksController = Ember.ArrayController.extend({
+    sortProperties: ['title'],
+    sortAscending: true
+  });
 
   App.Work = DS.Model.extend({
     title: DS.attr('string'),
@@ -179,6 +208,36 @@
       workViewCount: 8,
       image: 'images/dali-profile-of-time.jpg',
       drawer: 101
+    }, {
+      id: 6,
+      title: 'La Persistence de la Mémoire',
+      price: 45000000,
+      type: 'Painting',
+      description: 'Proin in consequat sem. Nulla vitae quam et leo volutpat commodo. Maecenas vel nisi purus. Nunc laoreet dolor nec eros imperdiet eleifend. Aliquam sollicitudin nec mauris non tristique. Sed et hendrerit dui. Cras non condimentum purus. Nam volutpat venenatis tortor. Donec a sapien non lectus sagittis iaculis. Morbi ut elit scelerisque, lacinia urna quis, pulvinar libero.',
+      isOnSale: true,
+      workViewCount: 108,
+      image: 'images/dali-persistance-memoire.jpg',
+      drawer: 101
+    }, {
+      id: 7,
+      title: 'The Treachery of Images',
+      price: 55000000,
+      type: 'Painting',
+      description: 'Proin in consequat sem. Nulla vitae quam et leo volutpat commodo. Maecenas vel nisi purus. Nunc laoreet dolor nec eros imperdiet eleifend. Aliquam sollicitudin nec mauris non tristique. Sed et hendrerit dui. Cras non condimentum purus. Nam volutpat venenatis tortor. Donec a sapien non lectus sagittis iaculis. Morbi ut elit scelerisque, lacinia urna quis, pulvinar libero.',
+      isOnSale: true,
+      workViewCount: 95,
+      image: 'images/magritte-trahison-images.jpg',
+      drawer: 102
+    }, {
+      id: 8,
+      title: 'Le Fils de l\'Homme',
+      price: 65000000,
+      type: 'Painting',
+      description: 'Proin in consequat sem. Nulla vitae quam et leo volutpat commodo. Maecenas vel nisi purus. Nunc laoreet dolor nec eros imperdiet eleifend. Aliquam sollicitudin nec mauris non tristique. Sed et hendrerit dui. Cras non condimentum purus. Nam volutpat venenatis tortor. Donec a sapien non lectus sagittis iaculis. Morbi ut elit scelerisque, lacinia urna quis, pulvinar libero.',
+      isOnSale: true,
+      workViewCount: 118,
+      image: 'images/magritte-fils-homme.jpg',
+      drawer: 102
     }
   ];
 
@@ -208,7 +267,7 @@
       image: 'images/artist2.png',
       artistViewCount: false,
       comments: [202],
-      works: [4, 5]
+      works: [4, 5, 6]
     }, {
       id: 102,
       firstName: 'Rene',
@@ -219,7 +278,8 @@
       diedOn: '15 August 1967 (aged 68)',
       description: 'Rene Francois Ghislain Magritte was a Belgian surrealist artist. He became well known for a number of witty and thought-provoking images that fall under the umbrella of surrealism. His work is known for challenging observers\' preconditioned perceptions of reality.',
       image: 'images/artist3.png',
-      artistViewCount: true
+      artistViewCount: true,
+      works: [7, 8]
     }, {
       id: 103,
       firstName: 'Andy',
